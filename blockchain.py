@@ -61,6 +61,12 @@ class Blockchain:
         return new_proof
             
     def hash(self, block):
-        encoded_block = json.dumps
+        """
+        Hash the given block using SHA-256
+        
+        :param block: block in blockchain
+        """
+        encoded_block = json.dumps(block, sort_keys = True).encode()
+        return hashlib.sha256(encoded_block).hexdigest()
 
 # Part 2 - Mining our Blockchain
