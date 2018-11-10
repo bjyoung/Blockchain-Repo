@@ -44,7 +44,7 @@ class Blockchain:
     
     def get_previous_block(self):
         """
-        Grab the last blcok in the blockchain
+        Grab the last block in the blockchain
         
         :return: last block
         """
@@ -122,3 +122,30 @@ app = Flask(__name__)
 blockchain = Blockchain()
 
 # Mining a new block
+# Use Flask to interact with web
+@app.route('/mine_block', methods = ['GET'])
+
+def mine_block():
+    """
+    Mine and add a new block to the blockchain.
+    
+    :return: JSON object containing info on new block and 200 HTTP response code
+    """
+    # Get proof and previous_hash for the new block
+    previous_block = blockchain.get_previous_block()
+    previous_proof = previous_block['proof']
+    proof = blockchain.proof_of_work(previous_proof)
+    previous_hash = blockchain.hash(previous_block)
+    
+    # Create new block
+    block = blockchain.create_block(proof, previous_hash)
+    
+    # Display block in Postman
+    response = {'message': 'Congratulations, you just mined a block!',
+                'index': block['index'],
+                'timestamp': block['timestamp'],
+                'proof': block['proof'],
+                'previous_hash': block['previous_hash']}
+    
+    # 200 represents a successful HTTP response
+    return jsonify(response), 200
