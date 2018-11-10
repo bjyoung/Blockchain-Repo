@@ -114,3 +114,11 @@ class Blockchain:
         return True
             
 # Part 2 - Mining our Blockchain
+# Creating a Flask-based Web App
+# For more Flask info, search for "Flask quickstart"
+app = Flask(__name__)
+    
+# Creating a Blockchain instance
+blockchain = Blockchain()
+
+# Mining a new block
