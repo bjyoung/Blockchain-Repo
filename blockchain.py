@@ -123,8 +123,8 @@ blockchain = Blockchain()
 
 # Mining a new block
 # Use Flask to interact with web
+# Send GET request
 @app.route('/mine_block', methods = ['GET'])
-
 def mine_block():
     """
     Mine and add a new block to the blockchain.
@@ -146,6 +146,21 @@ def mine_block():
                 'timestamp': block['timestamp'],
                 'proof': block['proof'],
                 'previous_hash': block['previous_hash']}
+    
+    # 200 represents a successful HTTP response
+    return jsonify(response), 200
+
+
+# Getting the full Blockchain
+@app.route('/get_chain', methods = ['GET'])
+def get_chain():
+    """
+    Jsonify chain information and send it out in GET request
+    
+    :return: JSON object, HTTP response code
+    """
+    response = {'chain': blockchain.chain,
+                'length': len(blockchain.chain)}
     
     # 200 represents a successful HTTP response
     return jsonify(response), 200
