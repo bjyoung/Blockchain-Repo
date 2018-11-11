@@ -164,6 +164,25 @@ def get_chain():
     # 200 represents a successful HTTP response
     return jsonify(response), 200
 
+# Check that chain is valid
+@app.route('/is_valid', methods = ['GET'])
+def is_valid():
+    """
+    Confirm that the chain has not been tampered with.
+    
+    :return: JSON object, HTTP response code
+    """
+    valid_chain = blockchain.is_chain_valid(blockchain.chain)
+    
+    if valid_chain is False:
+        message = 'Chain is has been tampered with'
+    else:
+        message = 'Chain is valid'
+        
+    response = {'message': message,
+                'is_valid': valid_chain}
+    return jsonify(response), 200
+
 # Running the app
 # host = '0.0.0.0' to make server publicly available
 # When running the app, go to File explorer and navigate to folder where code is located
