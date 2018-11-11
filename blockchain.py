@@ -35,7 +35,7 @@ class Blockchain:
         :return: block as a dict
         """
         block = {'index': len(self.chain) + 1,
-                 'timestamp': datetime.datetime.now(),
+                 'timestamp': str(datetime.datetime.now()),
                  'proof': proof,
                  'previous_hash': previous_hash}
         self.chain.append(block)
@@ -64,7 +64,6 @@ class Blockchain:
         check_proof = False
         while check_proof is False:
             hash_operation = hashlib.sha256(str(new_proof**2 - previous_proof**2).encode()).hexdigest()
-            
             
             if hash_operation[:4] == '0000':
                 check_proof = True
@@ -135,7 +134,7 @@ def mine_block():
     previous_block = blockchain.get_previous_block()
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
-    previous_hash = blockchain.hash(previous_block)
+    previous_hash = blockchain.hash(previous_block) #Error
     
     # Create new block
     block = blockchain.create_block(proof, previous_hash)
@@ -164,3 +163,14 @@ def get_chain():
     
     # 200 represents a successful HTTP response
     return jsonify(response), 200
+
+# Running the app
+# host = '0.0.0.0' to make server publicly available
+# When running the app, go to File explorer and navigate to folder where code is located
+# 1) Open Postman program
+# 2) Choose GET request near top
+# 3) Enter request URL:  http://127.0.0.1:5000/get_chain
+# 4) Hit Send button
+# 5) Enter request URL:  http://127.0.0.1:5000/mine_block
+# 6) Hit Send button
+app.run(host = '0.0.0.0', port = 5000)
