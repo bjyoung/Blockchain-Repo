@@ -15,7 +15,14 @@ from flask import Flask, jsonify # Web application portion
 
 # Part 1 - Building a Blockchain
 
-class Blockchain:    
+class Blockchain:
+    """
+    Class for forming and adding to a blockchain.
+    
+    Attr:
+        chain - list containing blocks in the blockchain
+    """
+    
     def __init__(self):
         """
         Blockchain constructor. Form empty chain and create genesis block.
@@ -175,7 +182,7 @@ def is_valid():
     valid_chain = blockchain.is_chain_valid(blockchain.chain)
     
     if valid_chain is False:
-        message = 'Chain is has been tampered with'
+        message = 'Chain has been tampered with'
     else:
         message = 'Chain is valid'
         
